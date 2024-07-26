@@ -9,6 +9,7 @@ const spanSpinner = document.getElementById('spanSpinner');
 const eventsRow = document.getElementById('events-row');
 const numeroProdottiCarrello = document.getElementById('numeroProdotti')
 const modalBody = document.getElementById('modal-body');
+const totaleCarrelloDom = document.getElementById('totaleCarrelloDom')
 
 let arrayProduct = []  //questo lo uso per andarmi a prendere i  prodotti dal db e metterli nel array per gestirli meglio
 let arrayCarrello = []
@@ -20,6 +21,7 @@ let totaleCarrello = 0
 const getEvents = function () {
   //localStorage.removeItem('carrello')
   //localStorage.removeItem('sommaCarrello')
+  //localStorage.removeItem('numeroProdottiCarrello')
   const savedCarrello = localStorage.getItem('carrello'); //andiamo ad ottenere  il carrello dal localstorage
   if (savedCarrello) {
     arrayCarrello = JSON.parse(savedCarrello);
@@ -27,6 +29,8 @@ const getEvents = function () {
   const sommaCarrello = localStorage.getItem('sommaCarrello'); //andiamo ad ottenere  il carrello dal localstorage
   if (sommaCarrello) {
     totaleCarrello = parseInt(sommaCarrello);
+    totaleCarrelloDom.innerText = totaleCarrello
+    console.log(totaleCarrello)
   }
   const numeroProd = localStorage.getItem('numeroProdottiCarrello'); //andiamo ad ottenere  il carrello dal localstorage
   if (numeroProd) {
@@ -151,16 +155,35 @@ function addProductCarrello(id) {
       arrayCarrello.push(product)  //vado ad inserire l'oggetto nel carrello
       let n = arrayCarrello.length    //per sapere quanti oggetti stanno nel carrello
       numeroProdottiCarrello.innerText = n
+      totaleCarrelloDom.innerText = totaleCarrello
+      console.log(totaleCarrello)
       localStorage.setItem('carrello', JSON.stringify(arrayCarrello));  //salva il carrello in modo locale al browser
       localStorage.setItem('sommaCarrello', totaleCarrello);  //salva il carrello in modo locale al browser
       localStorage.setItem('numeroProdottiCarrello', n);  //salva il carrello in modo locale al browser
       createDOMCarrello()
-      toast("Prodotto aggiunto nel carello")
       return   //senza che prosegue una volta trovato
     }
   })
   console.log(arrayCarrello)
   console.log(totaleCarrello)
+}
+
+
+//funzione per rimuovere un oggetto dal carrello
+function removeProductFromCarrello(id) {
+  arrayCarrello.forEach((product, index) => {
+    if(product._id === id) {
+      totaleCarrello -= product.price
+      arrayCarrello.splice(index,1)  //rimuove
+      numeroProdottiCarrello.innerText = arrayCarrello.length  //aggiorna il DOM
+      totaleCarrelloDom.innerText = totaleCarrello //Aggiorna il DOM
+      localStorage.setItem('carrello', JSON.stringify(arrayCarrello));
+      localStorage.setItem('numeroProdottiCarrello', arrayCarrello.length);
+      localStorage.setItem('sommaCarrello', totaleCarrello); 
+      createDOMCarrello();
+      return
+    }
+  })
 }
 
 function createDOMCarrello () {
@@ -196,11 +219,4 @@ function createDOMCarrello () {
   modalBody.innerHTML = carrelloHtml;
 }
 
-//per il momento da problemi per mezzo dell'id quando vado ad eliminare se ci sono duplicati. Dovrei aggiungere la qt, ma non so se ho tempo
-//funzione per rimuovere un oggetto dal carrello
-function removeProductFromCarrello(id) {
-  arrayCarrello = arrayCarrello.filter(product => product._id !== id);
-  localStorage.setItem('carrello', JSON.stringify(arrayCarrello));
-  createDOMCarrello();
-  toast("Prodotto rimosso dal carello")
-}
+
