@@ -38,7 +38,7 @@ const getEvents = function () {
                       <p class="card-text">${product.description}</p>
                       <p class="card-text">${product.brand}</p>
                       <p class="card-text">$${product.price}</p>
-                      <a href="./details.html?eventId=${product._id}" class="btn btn-primary w-100">Vai ai dettagli</a>
+                      <a href="./details.html?productId=${product._id}" class="btn btn-primary w-100">Vai ai dettagli</a>
                   </div>
               </div>
           </div>
@@ -56,4 +56,3 @@ const getEvents = function () {
 }
 
 getEvents();
-

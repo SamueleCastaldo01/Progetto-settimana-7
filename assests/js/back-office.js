@@ -1,48 +1,37 @@
-// - PARTE FINALE DELLA LEZIONE -
-// nel caso la pagina backoffice si caricasse con un parametro "eventId" nella barra
-// degli indirizzi, significa che non sono arrivato qui cliccando il bottone "backoffice"
-// nella navbar ma cliccando il tasto MODIFICA da uno degli eventi.
-// questo comporta che la mia pagina backoffice deve entrare in "modalità modifica":
-// - deve fare una fetch singola per i dettagli dell'evento con quell_id
-// - deve ri-popolare i campi del form con i dati risultanti dalla fetch
-// - il tasto SALVA non deve fare una POST, ma una PUT (per modificare l'evento con quell'id)
-
-const eventId = new URLSearchParams(location.search).get('eventId')
+const productId = new URLSearchParams(location.search).get('productId')
 
 const URL = 'https://striveschool-api.herokuapp.com/api/product/'
 const Auth = "Bearer" + " " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmEzNGUyZmYyNjBjYzAwMTVjYzBkYzkiLCJpYXQiOjE3MjE5Nzg0MTUsImV4cCI6MTcyMzE4ODAxNX0.1SOaS3sB4odDWGMlL8dDJwKMg-qCXYQEJhu4K_BsqYY"
 
-console.log('EVENTID', eventId)  //vado a prendere l'id per fare la modifica del prodotto
+console.log('productId', productId)  //vado a prendere l'id per fare la modifica del prodotto
 
-
-if (eventId) {  // qui fa una get per andare a prendere i dettagli del prodotto per popolare i campi di input
-  // se entro qui, vuol dire che sono in "modalità modifica"
-  // 1) fetch individuale per recuperare i dettagli, COME nella pagina DETAILS!
-  fetch(URL + eventId, {
+//modalità modifica, e l'id si ottiene solo attraverso la pagina details
+if (productId) {  // Qui si fa una GET per andare a prendere i dettagli del prodotto per popolare i campi di input
+  fetch(URL + productId, {
     method: 'GET', // Imposta il metodo come GET
     headers: {
-      "Authorization": Auth, // Aggiungi l'intestazione di autorizzazione
+      'Authorization': Auth, // Aggiungi l'intestazione di autorizzazione
+      'Content-Type': 'application/json' // non necessario
     }
   })
-  .then((response) => {
+  .then(response => {
     if (response.ok) {
-      // la chiamata è andata a buon fine
-      return response.json()
+      return response.json();
     } else {
-      throw new Error('errore nel recupero del singolo concerto')
+      throw new Error('Errore nel recupero del singolo concerto');
     }
   })
-  .then((singleEvent) => {
-    console.log('SINGLEEVENT', singleEvent)
-    // 2) ri-popolo i campi del form con i dati dell'evento
-    document.getElementById('name').value = singleEvent.name
-    document.getElementById('description').value = singleEvent.description
-    document.getElementById('time').value = singleEvent.time.split('.000Z')[0]
-    document.getElementById('price').value = singleEvent.price
+  .then(product => {
+    console.log('product', product);    //vado a popolare i campi con i dettagli dei prodotti ottenuti dalla get
+    document.getElementById('name').value = product.name;
+    document.getElementById('description').value = product.description;
+    document.getElementById('brand').value = product.brand;
+    document.getElementById('imageUrl').value = product.imageUrl;
+    document.getElementById('price').value = product.price;
   })
-  .catch((err) => {
-    console.log(err)
-  })
+  .catch(err => {
+    console.error('Errore:', err);
+  });
 }
 
 
@@ -59,7 +48,7 @@ class Product {
 
 
 
-// Evento del form per andare a prendere i parametri
+// Evento del form per andare a prendere i parametri, sia nel caso che sia una post o un put
 const eventForm = document.getElementById('event-form')
 eventForm.addEventListener('submit', function (e) {
   e.preventDefault() // bloccare il riavvio della pagina
@@ -102,7 +91,7 @@ eventForm.addEventListener('submit', function (e) {
 
 
   let methodToUse  // qui vado a scegliere il tipo di metodo, per farlo dianamico
-  if (eventId) {    // se è presente id
+  if (productId) {    // se è presente id
     // modalità modifica
     methodToUse = 'PUT'
   } else {
@@ -113,20 +102,17 @@ eventForm.addEventListener('submit', function (e) {
   
 
   let URLToUse
-  if (eventId) {
+  if (productId) {
     // modalità modifica
-    URLToUse = URL + eventId
+    URLToUse = URL + productId
   } else {
     // modalità creazione
     URLToUse = URL
   }
 
  
-  {/**** */}
-  // chiamata fetch() per fare una POST del concerto appena compilato
-  // per fare una chiamata POST, l'URL è lo stesso della chiamata GET
-  // ...se l'API è stata costruita secondo i principi REST
- 
+//questa fetch è dinamica l'andiamo ad usare sia per il post, che la put
+//sia per la modifica che per la creazione, e questo dipende tutto se gli viene passato il paramentro id dell' prodotto 
   fetch(URLToUse, {
     // definiamo il metodo da utilizzare (altrimenti sarebbe GET di default)
     method: methodToUse,
