@@ -21,7 +21,7 @@ const getEvents = function () {
     // Crea il markup per una card di placeholder
     const placeholderCard = `
         <div class="col-lg-3 col-md-6 col-sm-12 mt-4">
-            <div class="card" aria-hidden="true">
+            <div class="card containerCard" aria-hidden="true">
                 <div class="placeholder-image"></div>
                 <div class="card-body">
                     <h5 class="card-title placeholder-glow">
@@ -63,7 +63,7 @@ const getEvents = function () {
       arrayOfEvents.forEach((product) => {
         const newEventCol = `
           <div class="col-lg-3 col-md-6 col-sm-12 mt-4">
-              <div class="card">
+              <div class="card containerCard">
                 <a href="./details.html?productId=${product._id}">
                       <img
                       src="${product.imageUrl || 'https://uninuoro.it/wp-content/uploads/2018/08/aditya-chinchure-494048-unsplash.jpg'}"
@@ -76,7 +76,7 @@ const getEvents = function () {
                       <p class="card-text">${product.description}</p>
                       <p class="card-text"><b>Brand: ${product.brand}</b></p>
                       <p class="card-text">Prezzo: $${product.price}</p>
-                      <a href="./details.html?productId=${product._id}" class="btn btn-primary w-100">Vai ai dettagli</a>
+                      <a href="./details.html?productId=${product._id}" class="btn butcolor w-100">Vai ai dettagli</a>
                       <a href="./back-office.html?productId=${product._id}" class="btn btn-warning w-100 mt-2">Modifica Prodotto</a>
                   </div>
               </div>

@@ -4,6 +4,13 @@ body {
     color: white;
 }
 
+h1, .title {
+    background: linear-gradient(to right, #CB2376, #FF00D6);
+    -webkit-background-clip: text; /* Specifico per WebKit (Safari/Chrome) */
+    -webkit-text-fill-color: transparent; /* Specifico per WebKit (Safari/Chrome) */
+    background-clip: text;
+    color: transparent;
+}
 
 .img-card {
 width: 400px;
@@ -26,3 +33,25 @@ height: 200px;
 .fit-content {
     width: fit-content;
   }
+
+
+  .butcolor {
+    color: white; /* Colore del testo */
+    background: #CB2376; /* Sfondo trasparente */
+}
+
+.butcolor:hover {
+    background-color: #CB2376;
+    color: white;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.containerCard {
+    border-style: solid;
+    border-width: 4px;
+    border-radius: 20px;
+    border-color: #161b44;
+    background-color: transparent;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
