@@ -33,7 +33,7 @@ fetch(URL + productId, {
               <h2 class="card-title mb-3">${product.name}</h2>
               <p class="card-text"><b>Brand:</b> ${product.brand}</p>
               <p class="card-text"><b>Descrizione:</b> ${product.description}</p>
-              <a href="#" class="btn btn-primary">$${product.price} Compra</a>
+              <a href="#" class="btn butcolor">$${product.price} Compra</a>
           </div>
   `;
 })

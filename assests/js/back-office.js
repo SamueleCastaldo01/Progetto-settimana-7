@@ -121,7 +121,7 @@ eventForm.addEventListener('submit', function (e) {
 //questa fetch è dinamica l'andiamo ad usare sia per il post, che la put
 //sia per la modifica che per la creazione, e questo dipende tutto se gli viene passato il paramentro id dell' prodotto 
   fetch(URLToUse, {
-    
+
     method: methodToUse,
 
     body: JSON.stringify(newProduct), 
@@ -171,8 +171,10 @@ const deleteEvent = function() {
   })
   .then((response) => {
     if (response.ok) {
-      alert('Prodotto Eliminato');
-      location.assign('./index.html'); 
+      toast("Prodotto Eliminato")
+      setTimeout(() => {  //ci metto un ritardo, giusto il tempo per far visualizzare la notifica
+        location.assign('./index.html');
+      }, 3000);
     } else {
       toast("Problema nell'eliminazione")
       throw new Error("Problema nell'eliminazione");
