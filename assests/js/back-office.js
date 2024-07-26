@@ -138,14 +138,16 @@ eventForm.addEventListener('submit', function (e) {
         clearInput()
     
         if(productId){
-          location.assign('./index.html'); //una volta modificato ritorna alla pagina index
-          alert('Prodotto Modificato')
+          toast("Prodotto Modificato")
+          setTimeout(() => {
+            location.assign('./index.html');
+          }, 2000);
          } else {
-          alert('Prodotto Salvato')
+          toast("Prodotto Salvato")
          }
       } else {
         // se il concerto NON è stato salvato a causa di un problema
-        alert('ERRORE NEL SALVATAGGIO!')
+        toast("Errore nel Salvataggio")
         throw new Error('Errore nel salvataggio del concerto')
       }
     })
@@ -173,7 +175,7 @@ const deleteEvent = function() {
   })
   .then((response) => {
     if (response.ok) {
-      alert('Prodotto ELIMINATO');
+      alert('Prodotto Eliminato');
       location.assign('./index.html'); 
     } else {
 
@@ -184,6 +186,23 @@ const deleteEvent = function() {
     console.error('Error:', err);
   });
 }
+
+
+// Questo è il toast che si attiva quando succede un evento
+function toast(stringa) {
+  const toastEl = document.getElementById('myToast');
+  const toastBody = toastEl.querySelector('.toast-body'); // Seleziona il corpo del toast
+
+  // Aggiorna il testo del toast
+  toastBody.textContent = stringa;
+
+  // Inizializza e mostra il toast
+  const toast = new bootstrap.Toast(toastEl, {
+    delay: 4000 // Durata del toasts
+  });
+  toast.show();
+}
+ 
 
 
 //funzione per resettare i campi di input
