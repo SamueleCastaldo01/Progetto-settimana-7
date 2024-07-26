@@ -2,6 +2,20 @@ const productId = new URLSearchParams(location.search).get('productId')
 
 const URL = 'https://striveschool-api.herokuapp.com/api/product/'
 const Auth = "Bearer" + " " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmEzNGUyZmYyNjBjYzAwMTVjYzBkYzkiLCJpYXQiOjE3MjE5Nzg0MTUsImV4cCI6MTcyMzE4ODAxNX0.1SOaS3sB4odDWGMlL8dDJwKMg-qCXYQEJhu4K_BsqYY"
+  // recupero i riferimenti degli input
+  const nameInput = document.getElementById('name')
+  const descriptionInput = document.getElementById('description')
+  const brandInput = document.getElementById('brand')
+  const imageUrlInput = document.getElementById('imageUrl')
+  const priceInput = document.getElementById('price')
+
+  const btnSub = document.getElementById('btnSub')
+
+  if(productId) {
+    btnSub.innerText = "Modifica prodotto"
+  }else {
+    btnSub.innerText = "Crea prodotto"
+  }
 
 console.log('productId', productId)  //vado a prendere l'id per fare la modifica del prodotto
 
@@ -23,11 +37,11 @@ if (productId) {  // Qui si fa una GET per andare a prendere i dettagli del prod
   })
   .then(product => {
     console.log('product', product);    //vado a popolare i campi con i dettagli dei prodotti ottenuti dalla get
-    document.getElementById('name').value = product.name;
-    document.getElementById('description').value = product.description;
-    document.getElementById('brand').value = product.brand;
-    document.getElementById('imageUrl').value = product.imageUrl;
-    document.getElementById('price').value = product.price;
+    nameInput.value = product.name;
+    descriptionInput.value = product.description;
+    brandInput.value = product.brand;
+    imageUrlInput.value = product.imageUrl;
+    priceInput.value = product.price;
   })
   .catch(err => {
     console.error('Errore:', err);
@@ -52,12 +66,6 @@ class Product {
 const eventForm = document.getElementById('event-form')
 eventForm.addEventListener('submit', function (e) {
   e.preventDefault() // bloccare il riavvio della pagina
-  // recupero i riferimenti degli input
-  const nameInput = document.getElementById('name')
-  const descriptionInput = document.getElementById('description')
-  const brandInput = document.getElementById('brand')
-  const imageUrlInput = document.getElementById('imageUrl')
-  const priceInput = document.getElementById('price')
 
 
   const nameValue = nameInput.value
@@ -71,14 +79,6 @@ eventForm.addEventListener('submit', function (e) {
   console.log('nameInput', brandValue)
   console.log('nameInput', imageUrlValue)
   console.log('nameInput', priceValue)
-
-  function clearInput() {  //funzione per cancellare i campi di input
-    nameInput.value = ""
-    descriptionInput.value = ""
-    brandInput.value = ""
-    imageUrlInput.value = ""
-    priceInput.value = ""
-  }
 
   // Creo un istanza dell'oggetto
   const newProduct = new Product(
@@ -130,7 +130,13 @@ eventForm.addEventListener('submit', function (e) {
         // perchè non otterremmo altro che il concerto che volevamo salvare!
         // ci fermiamo qua!
         clearInput()
-        alert('Prodotto Salvato')
+    
+        if(productId){
+          location.assign('./index.html'); //una volta modificato ritorna alla pagina index
+          alert('Prodotto Modificato')
+         } else {
+          alert('Prodotto Salvato')
+         }
       } else {
         // se il concerto NON è stato salvato a causa di un problema
         alert('ERRORE NEL SALVATAGGIO!')
@@ -141,7 +147,14 @@ eventForm.addEventListener('submit', function (e) {
       console.log('ERRORE', err)
     })
 
-
-
 })
 
+
+//funzione per resettare i campi di input
+function clearInput() {  //funzione per cancellare i campi di input
+  nameInput.value = ""
+  descriptionInput.value = ""
+  brandInput.value = ""
+  imageUrlInput.value = ""
+  priceInput.value = ""
+}

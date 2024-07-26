@@ -26,11 +26,11 @@ const getEvents = function () {
       // Andiamo a creare le colonne con le card
       arrayOfEvents.forEach((product) => {
         const newEventCol = `
-          <div class="col">
+          <div class="col-lg-3 col-md-6 col-sm-12 mt-4">
               <div class="card">
                   <img
                       src="${product.imageUrl || 'https://uninuoro.it/wp-content/uploads/2018/08/aditya-chinchure-494048-unsplash.jpg'}"
-                      class="card-img-top"
+                      class="card-img-top img-fluid img-card"
                       alt="event pic"
                   />
                   <div class="card-body text-center">
