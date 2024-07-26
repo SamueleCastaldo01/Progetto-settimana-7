@@ -1,3 +1,8 @@
+body {
+    background: linear-gradient(to right, #101023, #192155); /* Rosso a Blu */
+    font-family: Arial, sans-serif;
+    color: white;
+}
 
 
 .img-card {

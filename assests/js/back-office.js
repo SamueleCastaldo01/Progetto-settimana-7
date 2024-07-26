@@ -38,7 +38,8 @@ if (productId) {  // Qui si fa una GET per andare a prendere i dettagli del prod
     if (response.ok) {
       return response.json();
     } else {
-      throw new Error('Errore nel recupero del singolo concerto');
+      toast('Errore nel recupero del singolo prodotto')
+      throw new Error('Errore nel recupero del singolo prodotto');
     }
   })
   .then(product => {
@@ -120,10 +121,10 @@ eventForm.addEventListener('submit', function (e) {
 //questa fetch è dinamica l'andiamo ad usare sia per il post, che la put
 //sia per la modifica che per la creazione, e questo dipende tutto se gli viene passato il paramentro id dell' prodotto 
   fetch(URLToUse, {
-    // definiamo il metodo da utilizzare (altrimenti sarebbe GET di default)
+    
     method: methodToUse,
-    // alleghiamo alla chiamata l'oggetto che abbiamo costruito precedentemente
-    body: JSON.stringify(newProduct), // le API si aspettano un oggetto stringhifizzato
+
+    body: JSON.stringify(newProduct), 
     headers: {
       "Authorization": Auth,
       'Content-Type': 'application/json',
@@ -131,10 +132,6 @@ eventForm.addEventListener('submit', function (e) {
   })
     .then((response) => {
       if (response.ok) {
-        // se il concerto è stato salvato correttamente
-        // non è indispensabile estrapolare il JSON da una chiamata POST,
-        // perchè non otterremmo altro che il concerto che volevamo salvare!
-        // ci fermiamo qua!
         clearInput()
     
         if(productId){
@@ -146,9 +143,8 @@ eventForm.addEventListener('submit', function (e) {
           toast("Prodotto Salvato")
          }
       } else {
-        // se il concerto NON è stato salvato a causa di un problema
         toast("Errore nel Salvataggio")
-        throw new Error('Errore nel salvataggio del concerto')
+        throw new Error('Errore nel salvataggio del prodotto')
       }
     })
     .catch((err) => {
@@ -178,7 +174,7 @@ const deleteEvent = function() {
       alert('Prodotto Eliminato');
       location.assign('./index.html'); 
     } else {
-
+      toast("Problema nell'eliminazione")
       throw new Error("Problema nell'eliminazione");
     }
   })
