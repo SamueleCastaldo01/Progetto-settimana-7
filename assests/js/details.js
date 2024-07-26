@@ -4,6 +4,31 @@ const productId = addressBarParameters.get('productId') // questo torna l'_id ne
 const URL = 'https://striveschool-api.herokuapp.com/api/product/'
 const Auth = "Bearer" + " " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmEzNGUyZmYyNjBjYzAwMTVjYzBkYzkiLCJpYXQiOjE3MjE5Nzg0MTUsImV4cCI6MTcyMzE4ODAxNX0.1SOaS3sB4odDWGMlL8dDJwKMg-qCXYQEJhu4K_BsqYY"
 
+const numeroProdottiCarrello = document.getElementById('numeroProdotti')
+const modalBody = document.getElementById('modal-body');
+const totaleCarrelloDom = document.getElementById('totaleCarrelloDom')
+let arrayProduct = []  //questo lo uso per andarmi a prendere i  prodotti dal db e metterli nel array per gestirli meglio
+let arrayCarrello = []
+let nProdottiCarrello = 0
+let totaleCarrello = 0
+
+const savedCarrello = localStorage.getItem('carrello'); //andiamo ad ottenere  il carrello dal localstorage
+if (savedCarrello) {
+  arrayCarrello = JSON.parse(savedCarrello);
+}
+const sommaCarrello = localStorage.getItem('sommaCarrello'); //andiamo ad ottenere  il carrello dal localstorage
+if (sommaCarrello) {
+  totaleCarrello = parseInt(sommaCarrello);
+  totaleCarrelloDom.innerText = totaleCarrello
+  console.log(totaleCarrello)
+}
+const numeroProd = localStorage.getItem('numeroProdottiCarrello'); //andiamo ad ottenere  il carrello dal localstorage
+if (numeroProd) {
+  totaleCarrello = parseInt(numeroProd);
+  numeroProdottiCarrello.innerText = totaleCarrello
+}
+
+
 
 //mi vado a prendere il singolo oggetto per vedere i dettagli
 fetch(URL + productId, {
