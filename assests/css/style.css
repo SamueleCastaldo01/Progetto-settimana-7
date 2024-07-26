@@ -67,3 +67,43 @@ height: 200px;
     color: white;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
+
+.pdBack {
+    padding: 0% 17%;
+    margin-bottom: 100px;
+}
+
+
+.inFondoPagina {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    background: linear-gradient(to right, #27008F, #570094, #A5009B, #DE00A0); 
+    bottom: 0;
+    width: 100%;
+}
+
+.contatti {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0 10px; 
+}
+
+.contatti p {
+    margin: 13px 10px; /* Aggiunge spazio tra i paragrafi */
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+.social-icons a {
+    color: white; 
+    font-size: 24px; 
+    margin: 0 15px; 
+    text-decoration: none; /* Rimuove la sottolineatura */
+    transition: color 0.3s ease; /* Transizione di colore */
+}
