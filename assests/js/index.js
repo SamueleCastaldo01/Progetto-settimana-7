@@ -77,7 +77,7 @@ const getEvents = function () {
                       <p class="card-text"><b>Brand: ${product.brand}</b></p>
                       <p class="card-text">Prezzo: $${product.price}</p>
                       <a href="./details.html?productId=${product._id}" class="btn butcolor w-100">Vai ai dettagli</a>
-                      <a href="./back-office.html?productId=${product._id}" class="btn btn-warning w-100 mt-2">Modifica Prodotto</a>
+                      <a href="./back-office.html?productId=${product._id}" class="btn butcolorSecondary w-100 mt-2">Modifica Prodotto</a>
                   </div>
               </div>
           </div>
