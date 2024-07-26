@@ -53,6 +53,7 @@ const getEvents = function () {
       if (response.ok) {
         return response.json();
       } else {
+        toast("Errore nella chiamata ok")
         throw new Error('Errore nella chiamata ok');
       }
     })
@@ -94,3 +95,20 @@ const getEvents = function () {
 }
 
 getEvents();
+
+
+
+// Questo è il toast che si attiva quando succede un evento
+function toast(stringa) {
+  const toastEl = document.getElementById('myToast');
+  const toastBody = toastEl.querySelector('.toast-body'); // Seleziona il corpo del toast
+
+  // Aggiorna il testo del toast
+  toastBody.textContent = stringa;
+
+  // Inizializza e mostra il toast
+  const toast = new bootstrap.Toast(toastEl, {
+    delay: 4000 // Durata del toasts
+  });
+  toast.show();
+}

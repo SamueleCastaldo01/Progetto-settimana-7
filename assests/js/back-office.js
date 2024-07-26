@@ -139,9 +139,9 @@ eventForm.addEventListener('submit', function (e) {
     
         if(productId){
           toast("Prodotto Modificato")
-          setTimeout(() => {
+          setTimeout(() => {  //ci metto un ritardo, giusto il tempo per far visualizzare la notifica
             location.assign('./index.html');
-          }, 2000);
+          }, 3000);
          } else {
           toast("Prodotto Salvato")
          }

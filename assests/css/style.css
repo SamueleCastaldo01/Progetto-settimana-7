@@ -11,3 +11,13 @@ height: 200px;
     background-color: #868e96; /* Colore grigio per il placeholder */
     border-radius: 0.25rem; /* Opzionale: per arrotondare gli angoli */
 }
+
+.detailImg {
+    height: 300px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.fit-content {
+    width: fit-content;
+  }
