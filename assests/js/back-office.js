@@ -10,7 +10,7 @@
 const eventId = new URLSearchParams(location.search).get('eventId')
 
 const URL = 'https://striveschool-api.herokuapp.com/api/product/'
-  const Auth = "Bearer" + " " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmEzNGUyZmYyNjBjYzAwMTVjYzBkYzkiLCJpYXQiOjE3MjE5Nzg0MTUsImV4cCI6MTcyMzE4ODAxNX0.1SOaS3sB4odDWGMlL8dDJwKMg-qCXYQEJhu4K_BsqYY"
+const Auth = "Bearer" + " " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmEzNGUyZmYyNjBjYzAwMTVjYzBkYzkiLCJpYXQiOjE3MjE5Nzg0MTUsImV4cCI6MTcyMzE4ODAxNX0.1SOaS3sB4odDWGMlL8dDJwKMg-qCXYQEJhu4K_BsqYY"
 
 console.log('EVENTID', eventId)  //vado a prendere l'id per fare la modifica del prodotto
 
@@ -91,7 +91,7 @@ eventForm.addEventListener('submit', function (e) {
     priceInput.value = ""
   }
 
-  // Creo una classe Product
+  // Creo un istanza dell'oggetto
   const newProduct = new Product(
     nameValue,
     descriptionValue,
