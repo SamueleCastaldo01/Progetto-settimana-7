@@ -28,7 +28,7 @@ if (numeroProd) {
   numeroProdottiCarrello.innerText = totaleCarrello
 }
 
-
+createDOMCarrello()
 
 //mi vado a prendere il singolo oggetto per vedere i dettagli
 fetch(URL + productId, {
@@ -80,4 +80,38 @@ function toast(stringa) {
     delay: 4000 // Durata del toasts
   });
   toast.show();
+}
+
+
+function createDOMCarrello () {
+  modalBody.innerHTML = ''
+  let carrelloHtml = '';
+  arrayCarrello.forEach((product) => {
+    carrelloHtml += `
+      <div class="row">
+        <hr class="text-black">
+          <div class="col-4">
+            <a href="./details.html?productId=${product._id}">
+                  <img
+                  src="${product.imageUrl || 'https://uninuoro.it/wp-content/uploads/2018/08/aditya-chinchure-494048-unsplash.jpg'}"
+                  class="card-img-top img-fluid img-card"
+                  alt="product pic"
+              />
+            </a>
+          </div>
+          <div class="col-8">
+                  <div class="text-start text-black">
+                  <h5 class="card-title fw-bold text-black">${product.name}</h5>
+                  <p class="card-text">${product.description}</p>
+                  <p class="card-text"><b>Brand: ${product.brand}</b></p>
+                  <p class="card-text">Prezzo: $${product.price}</p>
+                  <a href="./details.html?productId=${product._id}" class="btn butcolor">Vai ai dettagli</a>
+                  <button onclick="removeProductFromCarrello('${product._id}')"  class="btn btn-danger">Rimuovi dal Carrello</button>
+              </div>
+          </div>
+      <hr class="text-black mb-5">
+      </div>
+    `;
+  })
+  modalBody.innerHTML = carrelloHtml;
 }

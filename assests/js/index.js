@@ -151,7 +151,7 @@ function toast(stringa) {
 function addProductCarrello(id) {
   arrayProduct.forEach((product) => {
     if(product._id === id) {
-      totaleCarrello += parseInt(product.price)  //per il totale del carrello
+      totaleCarrello = totaleCarrello + parseInt(product.price)  //per il totale del carrello
       arrayCarrello.push(product)  //vado ad inserire l'oggetto nel carrello
       let n = arrayCarrello.length    //per sapere quanti oggetti stanno nel carrello
       numeroProdottiCarrello.innerText = n
@@ -173,7 +173,7 @@ function addProductCarrello(id) {
 function removeProductFromCarrello(id) {
   arrayCarrello.forEach((product, index) => {
     if(product._id === id) {
-      totaleCarrello -= product.price
+      totaleCarrello = totaleCarrello - parseInt(product.price)
       arrayCarrello.splice(index,1)  //rimuove
       numeroProdottiCarrello.innerText = arrayCarrello.length  //aggiorna il DOM
       totaleCarrelloDom.innerText = totaleCarrello //Aggiorna il DOM
