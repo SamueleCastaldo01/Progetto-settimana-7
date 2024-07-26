@@ -143,6 +143,7 @@ function toast(stringa) {
 }
 
 
+
 function addProductCarrello(id) {
   arrayProduct.forEach((product) => {
     if(product._id === id) {
@@ -154,6 +155,7 @@ function addProductCarrello(id) {
       localStorage.setItem('sommaCarrello', totaleCarrello);  //salva il carrello in modo locale al browser
       localStorage.setItem('numeroProdottiCarrello', n);  //salva il carrello in modo locale al browser
       createDOMCarrello()
+      toast("Prodotto aggiunto nel carello")
       return   //senza che prosegue una volta trovato
     }
   })
@@ -184,7 +186,7 @@ function createDOMCarrello () {
                   <p class="card-text"><b>Brand: ${product.brand}</b></p>
                   <p class="card-text">Prezzo: $${product.price}</p>
                   <a href="./details.html?productId=${product._id}" class="btn butcolor">Vai ai dettagli</a>
-                  <button  class="btn btn-danger">Rimuovi dal Carrello</button>
+                  <button onclick="removeProductFromCarrello('${product._id}')"  class="btn btn-danger">Rimuovi dal Carrello</button>
               </div>
           </div>
       <hr class="text-black mb-5">
@@ -194,9 +196,11 @@ function createDOMCarrello () {
   modalBody.innerHTML = carrelloHtml;
 }
 
+//per il momento da problemi per mezzo dell'id quando vado ad eliminare se ci sono duplicati. Dovrei aggiungere la qt, ma non so se ho tempo
 //funzione per rimuovere un oggetto dal carrello
 function removeProductFromCarrello(id) {
   arrayCarrello = arrayCarrello.filter(product => product._id !== id);
   localStorage.setItem('carrello', JSON.stringify(arrayCarrello));
   createDOMCarrello();
+  toast("Prodotto rimosso dal carello")
 }
