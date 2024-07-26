@@ -16,7 +16,7 @@
     <header>
       <nav class="navbar navbar-expand-md bg-dark" data-bs-theme="dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">EpiTicketOne</a>
+          <a class="navbar-brand" href="#">Crudazone</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -131,14 +131,14 @@
                 />
               </div>
 
-              <div class="d-flex">
+              <div class="d-flex justify-content-between">
                 <button id="btnSub" type="submit" class="btn btn-primary">
                   Crea Prodotto
                 </button>
-                <div class="ms-auto">
+                <div id="divButtonDelete">
+                </div>
                   <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Reset
-                  </button>
                 </div>
               </div>
             </form>
@@ -147,7 +147,7 @@
       </div>
     </main>
 
-      <!-- Modal per la conferma-->
+      <!-- Modal per il reset serve per la conferma-->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -159,12 +159,31 @@
           Sei sicuro di voler resettare i parametri
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-bs-dismiss="modal">No</button>
-          <button type="button" onclick="clearInput()" data-bs-dismiss="modal" class="btn btn-danger">Si</button>
+          <button type="button"  data-bs-dismiss="modal" class="btn btn-primary">No</button>
+          <button type="button" onclick="clearInput()"  data-bs-dismiss="modal" class="btn btn-danger">Si</button>
         </div>
       </div>
     </div>
   </div>
+
+        <!-- Modal per il delete serve per la conferma-->
+        <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDelete" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalDelete">Attenzione</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Sei sicuro di voler eliminare il prodotto
+              </div>
+              <div class="modal-footer">
+                <button type="button"  data-bs-dismiss="modal" class="btn btn-primary">No</button>
+                <button type="button" onclick="deleteEvent()"  data-bs-dismiss="modal" class="btn btn-danger">Si</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

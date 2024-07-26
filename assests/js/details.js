@@ -65,7 +65,7 @@ const deleteEvent = function(productId) {
   })
   .then((response) => {
     if (response.ok) {
-      alert('CONCERTO ELIMINATO');
+      alert('Prodotto eliminato');
       location.assign('./index.html'); 
     } else {
 

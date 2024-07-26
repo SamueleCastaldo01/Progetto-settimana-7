@@ -10,9 +10,15 @@ const Auth = "Bearer" + " " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2
   const priceInput = document.getElementById('price')
 
   const btnSub = document.getElementById('btnSub')
+  const divButtonDelete = document.getElementById('divButtonDelete')
 
-  if(productId) {
+  if(productId) {  //come se adasse nella pagina modifica. Cambia il nome del bottone. E si aggiunge il bottone delete
     btnSub.innerText = "Modifica prodotto"
+    divButtonDelete.innerHTML = `
+    <button id="btnSub" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete">
+      Delete
+    </button>
+    `;
   }else {
     btnSub.innerText = "Crea prodotto"
   }
@@ -148,6 +154,36 @@ eventForm.addEventListener('submit', function (e) {
     })
 
 })
+
+
+//funzione per eliminare un prodotto
+const deleteEvent = function() { 
+  // Verifica che l'productId sia definito
+  if (!productId) {
+    console.error('ID dell\'evento non fornito');
+    return;
+  }
+
+  fetch(URL + productId, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': Auth,
+      'Content-Type': 'application/json' // Non necessario
+    }
+  })
+  .then((response) => {
+    if (response.ok) {
+      alert('Prodotto ELIMINATO');
+      location.assign('./index.html'); 
+    } else {
+
+      throw new Error("Problema nell'eliminazione");
+    }
+  })
+  .catch((err) => {
+    console.error('Error:', err);
+  });
+}
 
 
 //funzione per resettare i campi di input
