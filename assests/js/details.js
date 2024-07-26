@@ -1,3 +1,7 @@
+//per i dettagli per questioni tempistiche non sono riuscito ad aggiungere, aggiungi la carello e la rimozione del prodotto al carello
+//qui il carrello può essere solo visualizzato
+//nell'homepage il carrello funziona senza nessun problema
+
 const addressBarParameters = new URLSearchParams(location.search)
 const productId = addressBarParameters.get('productId') // questo torna l'_id nella barra degli indirizzi
 
@@ -106,7 +110,6 @@ function createDOMCarrello () {
                   <p class="card-text"><b>Brand: ${product.brand}</b></p>
                   <p class="card-text">Prezzo: $${product.price}</p>
                   <a href="./details.html?productId=${product._id}" class="btn butcolor">Vai ai dettagli</a>
-                  <button onclick="removeProductFromCarrello('${product._id}')"  class="btn btn-danger">Rimuovi dal Carrello</button>
               </div>
           </div>
       <hr class="text-black mb-5">
@@ -115,3 +118,23 @@ function createDOMCarrello () {
   })
   modalBody.innerHTML = carrelloHtml;
 }
+
+/*
+
+//funzione per rimuovere un oggetto dal carrello
+function removeProductFromCarrello(id) {
+  arrayCarrello.forEach((product, index) => {
+    if(product._id === id) {
+      totaleCarrello = totaleCarrello - parseInt(product.price)
+      arrayCarrello.splice(index,1)  //rimuove
+      numeroProdottiCarrello.innerText = arrayCarrello.length  //aggiorna il DOM
+      totaleCarrelloDom.innerText = totaleCarrello //Aggiorna il DOM
+      localStorage.setItem('carrello', JSON.stringify(arrayCarrello));
+      localStorage.setItem('numeroProdottiCarrello', arrayCarrello.length);
+      localStorage.setItem('sommaCarrello', totaleCarrello); 
+      createDOMCarrello();
+      return
+    }
+  })
+}
+  */
