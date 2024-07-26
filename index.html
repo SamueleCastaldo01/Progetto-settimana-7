@@ -34,7 +34,7 @@
                         </li>
                     </ul>
 
-                    <button class="btn butcolor">Carello</button>
+                    <button class="btn butcolor" data-bs-toggle="modal" data-bs-target="#modalCarello"><span id="numeroProdotti" class="me-2"></span>Carello</button>
 
                 </div>
             </div>
@@ -69,6 +69,24 @@
             </div>
         </div>
     </div>
+
+      <!-- Modal per visualizzare il carello-->
+  <div class="modal fade" id="modalCarello" tabindex="-1" aria-labelledby="modalCarello" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalCarello">Carello</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modal-body">
+          
+        </div>
+        <div class="modal-footer">
+
+        </div>
+      </div>
+    </div>
+  </div>
 
     <footer class="inFondoPagina">
         <div class="contatti">

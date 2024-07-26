@@ -7,22 +7,31 @@ const Auth = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmEzNGUyZm
 
 const spanSpinner = document.getElementById('spanSpinner');
 const eventsRow = document.getElementById('events-row');
+const numeroProdottiCarrello = document.getElementById('numeroProdotti')
+const modalBody = document.getElementById('modal-body');
 
 let arrayProduct = []  //questo lo uso per andarmi a prendere i  prodotti dal db e metterli nel array per gestirli meglio
-let arrayCarello = []
-let nProdottiCarello = 0
-let totaleCarello = 0
+let arrayCarrello = []
+let nProdottiCarrello = 0
+let totaleCarrello = 0
 
 
 
 const getEvents = function () {
-  const savedCarello = localStorage.getItem('carello'); //andiamo ad ottenere  il carello dal localstorage
-  if (savedCarello) {
-    arrayCarello = JSON.parse(savedCarello);
+  //localStorage.removeItem('carrello')
+  //localStorage.removeItem('sommaCarrello')
+  const savedCarrello = localStorage.getItem('carrello'); //andiamo ad ottenere  il carrello dal localstorage
+  if (savedCarrello) {
+    arrayCarrello = JSON.parse(savedCarrello);
   }
-  const sommaCarello = localStorage.getItem('sommaCarello'); //andiamo ad ottenere  il carello dal localstorage
-  if (sommaCarello) {
-    totaleCarello = JSON.parse(savedCarello);
+  const sommaCarrello = localStorage.getItem('sommaCarrello'); //andiamo ad ottenere  il carrello dal localstorage
+  if (sommaCarrello) {
+    totaleCarrello = parseInt(sommaCarrello);
+  }
+  const numeroProd = localStorage.getItem('numeroProdottiCarrello'); //andiamo ad ottenere  il carrello dal localstorage
+  if (numeroProd) {
+    totaleCarrello = parseInt(numeroProd);
+    numeroProdottiCarrello.innerText = totaleCarrello
   }
 
     // Mostra lo spinner
@@ -57,6 +66,8 @@ const getEvents = function () {
     `; 
     eventsRow.innerHTML += placeholderCard
   }
+
+  createDOMCarrello()
 
   fetch(URL, {
     method: 'GET',
@@ -95,7 +106,7 @@ const getEvents = function () {
                       <p class="card-text">Prezzo: $${product.price}</p>
                       <a href="./details.html?productId=${product._id}" class="btn butcolor w-100">Vai ai dettagli</a>
                       <a href="./back-office.html?productId=${product._id}" class="btn butcolorSecondary w-100 mt-2">Modifica Prodotto</a>
-                       <button onclick="addProductCarello('${product._id}')" class="btn btn-success w-100 mt-2">Compra Prodotto</button>
+                       <button onclick="addProductCarrello('${product._id}')" class="btn btn-success w-100 mt-2">Compra Prodotto</button>
                   </div>
               </div>
           </div>
@@ -132,16 +143,60 @@ function toast(stringa) {
 }
 
 
-function addProductCarello(id) {
+function addProductCarrello(id) {
   arrayProduct.forEach((product) => {
     if(product._id === id) {
-      totaleCarello += product.price  //per il totale del carello
-      arrayCarello.push(product)  //vado ad inserire l'oggetto nel carello
-      localStorage.setItem('carello', JSON.stringify(arrayCarello));  //salva il carello in modo locale al browser
-      localStorage.setItem('sommaCarello', totaleCarello);  //salva il carello in modo locale al browser
+      totaleCarrello += parseInt(product.price)  //per il totale del carrello
+      arrayCarrello.push(product)  //vado ad inserire l'oggetto nel carrello
+      let n = arrayCarrello.length    //per sapere quanti oggetti stanno nel carrello
+      numeroProdottiCarrello.innerText = n
+      localStorage.setItem('carrello', JSON.stringify(arrayCarrello));  //salva il carrello in modo locale al browser
+      localStorage.setItem('sommaCarrello', totaleCarrello);  //salva il carrello in modo locale al browser
+      localStorage.setItem('numeroProdottiCarrello', n);  //salva il carrello in modo locale al browser
+      createDOMCarrello()
       return   //senza che prosegue una volta trovato
     }
   })
-  console.log(arrayCarello)
-  console.log(totaleCarello)
+  console.log(arrayCarrello)
+  console.log(totaleCarrello)
+}
+
+function createDOMCarrello () {
+  modalBody.innerHTML = ''
+  let carrelloHtml = '';
+  arrayCarrello.forEach((product) => {
+    carrelloHtml += `
+      <div class="row">
+        <hr class="text-black">
+          <div class="col-4">
+            <a href="./details.html?productId=${product._id}">
+                  <img
+                  src="${product.imageUrl || 'https://uninuoro.it/wp-content/uploads/2018/08/aditya-chinchure-494048-unsplash.jpg'}"
+                  class="card-img-top img-fluid img-card"
+                  alt="product pic"
+              />
+            </a>
+          </div>
+          <div class="col-8">
+                  <div class="text-start text-black">
+                  <h5 class="card-title fw-bold text-black">${product.name}</h5>
+                  <p class="card-text">${product.description}</p>
+                  <p class="card-text"><b>Brand: ${product.brand}</b></p>
+                  <p class="card-text">Prezzo: $${product.price}</p>
+                  <a href="./details.html?productId=${product._id}" class="btn butcolor">Vai ai dettagli</a>
+                  <button  class="btn btn-danger">Rimuovi dal Carrello</button>
+              </div>
+          </div>
+      <hr class="text-black mb-5">
+      </div>
+    `;
+  })
+  modalBody.innerHTML = carrelloHtml;
+}
+
+//funzione per rimuovere un oggetto dal carrello
+function removeProductFromCarrello(id) {
+  arrayCarrello = arrayCarrello.filter(product => product._id !== id);
+  localStorage.setItem('carrello', JSON.stringify(arrayCarrello));
+  createDOMCarrello();
 }

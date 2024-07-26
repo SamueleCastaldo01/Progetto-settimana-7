@@ -109,3 +109,8 @@ height: 200px;
     text-decoration: none; /* Rimuove la sottolineatura */
     transition: color 0.3s ease; /* Transizione di colore */
 }
+
+.modal-body {
+    max-height: 80vh; /* Imposta l'altezza massima desiderata */
+    overflow-y: auto; /* Aggiunge lo scroll verticale quando il contenuto supera l'altezza massima */
+  }
