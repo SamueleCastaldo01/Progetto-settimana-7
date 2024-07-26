@@ -8,7 +8,23 @@ const Auth = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmEzNGUyZm
 const spanSpinner = document.getElementById('spanSpinner');
 const eventsRow = document.getElementById('events-row');
 
+let arrayProduct = []  //questo lo uso per andarmi a prendere i  prodotti dal db e metterli nel array per gestirli meglio
+let arrayCarello = []
+let nProdottiCarello = 0
+let totaleCarello = 0
+
+
+
 const getEvents = function () {
+  const savedCarello = localStorage.getItem('carello'); //andiamo ad ottenere  il carello dal localstorage
+  if (savedCarello) {
+    arrayCarello = JSON.parse(savedCarello);
+  }
+  const sommaCarello = localStorage.getItem('sommaCarello'); //andiamo ad ottenere  il carello dal localstorage
+  if (sommaCarello) {
+    totaleCarello = JSON.parse(savedCarello);
+  }
+
     // Mostra lo spinner
     spanSpinner.innerHTML = `
     <div class="spinner-border" role="status">
@@ -61,6 +77,7 @@ const getEvents = function () {
       eventsRow.innerHTML = ''  //qui va a cancellare le card vuote
       // Andiamo a creare le colonne con le card
       arrayOfEvents.forEach((product) => {
+        arrayProduct.push(product)
         const newEventCol = `
           <div class="col-lg-3 col-md-6 col-sm-12 mt-4">
               <div class="card containerCard">
@@ -78,6 +95,7 @@ const getEvents = function () {
                       <p class="card-text">Prezzo: $${product.price}</p>
                       <a href="./details.html?productId=${product._id}" class="btn butcolor w-100">Vai ai dettagli</a>
                       <a href="./back-office.html?productId=${product._id}" class="btn butcolorSecondary w-100 mt-2">Modifica Prodotto</a>
+                       <button onclick="addProductCarello('${product._id}')" class="btn btn-success w-100 mt-2">Compra Prodotto</button>
                   </div>
               </div>
           </div>
@@ -87,6 +105,7 @@ const getEvents = function () {
         eventsRow.innerHTML += newEventCol;
         spanSpinner.innerHTML = '';
       });
+      console.log(arrayProduct)
     })
     .catch((error) => {
       // Gestione degli errori
@@ -95,7 +114,6 @@ const getEvents = function () {
 }
 
 getEvents();
-
 
 
 // Questo è il toast che si attiva quando succede un evento
@@ -111,4 +129,19 @@ function toast(stringa) {
     delay: 4000 // Durata del toasts
   });
   toast.show();
+}
+
+
+function addProductCarello(id) {
+  arrayProduct.forEach((product) => {
+    if(product._id === id) {
+      totaleCarello += product.price  //per il totale del carello
+      arrayCarello.push(product)  //vado ad inserire l'oggetto nel carello
+      localStorage.setItem('carello', JSON.stringify(arrayCarello));  //salva il carello in modo locale al browser
+      localStorage.setItem('sommaCarello', totaleCarello);  //salva il carello in modo locale al browser
+      return   //senza che prosegue una volta trovato
+    }
+  })
+  console.log(arrayCarello)
+  console.log(totaleCarello)
 }
