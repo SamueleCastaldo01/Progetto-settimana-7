@@ -4,3 +4,10 @@
 width: 400px;
 height: 200px;
 }
+
+.placeholder-image {
+    width: 100%;
+    height: 200px; /* Imposta l'altezza desiderata */
+    background-color: #868e96; /* Colore grigio per il placeholder */
+    border-radius: 0.25rem; /* Opzionale: per arrotondare gli angoli */
+}

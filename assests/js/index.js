@@ -5,8 +5,43 @@
 const URL = 'https://striveschool-api.herokuapp.com/api/product/';
 const Auth = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmEzNGUyZmYyNjBjYzAwMTVjYzBkYzkiLCJpYXQiOjE3MjE5Nzg0MTUsImV4cCI6MTcyMzE4ODAxNX0.1SOaS3sB4odDWGMlL8dDJwKMg-qCXYQEJhu4K_BsqYY";
 
+const spanSpinner = document.getElementById('spanSpinner');
+const eventsRow = document.getElementById('events-row');
+
 const getEvents = function () {
-  // Fetch con headers per l'autenticazione
+    // Mostra lo spinner
+    spanSpinner.innerHTML = `
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Caricamento...</span>
+    </div>
+  `;
+
+  //mostra le card vuote prima del caricamento
+  for (let i = 0; i < 12; i++) {
+    // Crea il markup per una card di placeholder
+    const placeholderCard = `
+        <div class="col-lg-3 col-md-6 col-sm-12 mt-4">
+            <div class="card" aria-hidden="true">
+                <div class="placeholder-image"></div>
+                <div class="card-body">
+                    <h5 class="card-title placeholder-glow">
+                        <span class="placeholder col-6"></span>
+                    </h5>
+                    <p class="card-text placeholder-glow">
+                        <span class="placeholder col-7"></span>
+                        <span class="placeholder col-4"></span>
+                        <span class="placeholder col-4"></span>
+                        <span class="placeholder col-6"></span>
+                        <span class="placeholder col-8"></span>
+                    </p>
+                    <a class="btn btn-primary disabled placeholder col-6" aria-disabled="true"></a>
+                </div>
+            </div>
+        </div>
+    `; 
+    eventsRow.innerHTML += placeholderCard
+  }
+
   fetch(URL, {
     method: 'GET',
     headers: {
@@ -15,7 +50,6 @@ const getEvents = function () {
     }
   })
     .then((response) => {
-      console.log(response);
       if (response.ok) {
         return response.json();
       } else {
@@ -23,6 +57,7 @@ const getEvents = function () {
       }
     })
     .then((arrayOfEvents) => {
+      eventsRow.innerHTML = ''  //qui va a cancellare le card vuote
       // Andiamo a creare le colonne con le card
       arrayOfEvents.forEach((product) => {
         const newEventCol = `
@@ -48,8 +83,8 @@ const getEvents = function () {
         `;
 
         // Selezioniamo la row e appendiamo la nuova colonna
-        const eventsRow = document.getElementById('events-row');
         eventsRow.innerHTML += newEventCol;
+        spanSpinner.innerHTML = '';
       });
     })
     .catch((error) => {
